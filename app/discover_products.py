@@ -59,7 +59,7 @@ def main():
         assortments = load_json("config/walgreens_assortments.json")
         walgreens = loc["walgreens"]
         if walgreens.get("enabled") and walgreens.get("store_id"):
-            print("\\n### WALGREENS ASSORTMENT WATCHLIST (not set-specific)")
+            print("\n### WALGREENS ASSORTMENT WATCHLIST (not set-specific)")
             for item in assortments:
                 code = item["wic"]
                 try:

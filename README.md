@@ -49,6 +49,10 @@ These are assortment/catalog lookup codes, not verified set-specific product IDs
    Leave unmatched IDs as `null`.
 5. Run **Actions → Inventory Monitor → Run workflow** to test. Monitoring is scheduled every 15 minutes after setup.
 
+## Walmart seller verification
+
+Retail Radar only treats a Walmart listing as eligible for Walmart stock alerts when the product response explicitly identifies `seller_name` as `Walmart.com`. Marketplace listings, other sellers, and listings with missing/unverified seller identity are skipped. A listing being hosted on walmart.com, fulfilled by Walmart, or showing a Walmart URL is not by itself proof that Walmart is the seller.
+
 ## Reliability
 - Alerts fire on the first positive stock observation and when a product changes from out of stock to in stock.
 - Unknown stock responses are logged as errors, not treated as out of stock.

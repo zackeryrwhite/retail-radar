@@ -12,7 +12,8 @@ def in_stock(row):
     if s in {"out of stock","unavailable","out_of_stock","not available"}: return False
     target_status=str(row.get("in_store") or "").lower().strip()
     if target_status in {"in_stock","limited_stock_see_store"}: return True
-    if target_status in {"out_of_stock","unavailable","not_sold_in_store"}: return False
+    if target_status in {"out_of_stock","unavailable"}: return False
+    if target_status == "not_sold_in_store": return None
     av=row.get("availability")
     if isinstance(av,dict):
         for k in ("in_store","pickup"):

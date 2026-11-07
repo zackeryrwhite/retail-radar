@@ -25,6 +25,16 @@ Store IDs are configured: Walgreens 10697, Dollar General 14405, Walmart 1731, a
 
 Product identifiers are intentionally blank until exact variants are confirmed.
 
+## Walgreens assortment watchlist
+
+The separate `config/walgreens_assortments.json` list searches Walgreens WIC assortment codes independently of the three set-specific products:
+- 665814 — universal Pokémon pack assortment (packs, blisters, individual packs)
+- 941046 — mini-tin assortment
+- 300443630 — Pokémon TCG online assortment baseline
+- 300425671 — third-party packaged Pokémon Trading Cards Lightning Set
+
+These are assortment/catalog lookup codes, not verified set-specific product IDs. A match or positive assortment quantity must not be interpreted as proof that Delta Reign, 30th Celebration, or Pitch Black is in stock. Discovery prints matches for manual review; it does not configure Walgreens stock alerts from WIC codes.
+
 ## Setup
 1. In **Settings → Secrets and variables → Actions**, add repository secrets:
    - `SCAVIO_API_KEY`

@@ -6,7 +6,7 @@ Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Dis
 - Walgreens: store lookup, product search, and stock lookup.
 - Dollar General: store lookup, product search, and UPC-based stock lookup.
 - Walmart: paused; discovery found only third-party marketplace sellers, so no Walmart stock monitoring is active.
-- Target: product search by TCIN and store-level availability at Victor store 1156.
+- Target: discovery only; store-level availability monitoring is not yet validated.
 - Staples: disabled until a verified store-level inventory integration is available.
 
 ## Initial store targets
@@ -41,13 +41,13 @@ These are assortment/catalog lookup codes, not verified set-specific product IDs
    - `DISCORD_WEBHOOK_URL`
 2. Open **Actions → Discover Products → Run workflow**.
 3. Inspect the logs for exact sealed-product matches and retailer-specific identifiers. Store IDs are already configured.
-4. Confirm exact set, packaging, and variant, then fill the matching IDs in `config/products.json`:
+4. Confirm exact set, packaging, and variant, then fill the matching IDs in `config/products.json` for retailers with verified stock endpoints:
    - Walgreens: `product_id`
    - Dollar General: `upc`
-   - Walmart: `item_id`
+   - Walmart: paused; do not configure until first-party seller and stock monitoring are independently verified.
    - Target: `tcin`
    Leave unmatched IDs as `null`.
-5. Run **Actions → Inventory Monitor → Run workflow** to test. Monitoring is scheduled every 15 minutes after setup.
+5. Only after validating a retailer-specific stock response, set that store’s `monitor_enabled` to `true` in `config/stores.json`. Then manually run **Actions → Inventory Monitor → Run workflow** and inspect the logs before relying on alerts. Do not enable a recurring schedule until the manual run is confirmed.
 
 ## Monitoring status
 

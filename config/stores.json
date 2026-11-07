@@ -6,21 +6,27 @@
       "street_match": "431 Hamilton",
       "store_id": "10697",
       "display_name": "Walgreens - 431 Hamilton St",
-      "address": "431 Hamilton St, Geneva, NY 14456"
+      "address": "431 Hamilton St, Geneva, NY 14456",
+      "monitor_enabled": false,
+      "note": "Discovery and broad assortment research only; no set-specific product IDs verified for stock alerts."
     },
     "dollar_general": {
       "enabled": true,
       "street_match": "194 N Exchange",
       "store_id": "14405",
       "display_name": "Dollar General - 194 N Exchange St",
-      "address": "194 N Exchange St, Geneva, NY 14456"
+      "address": "194 N Exchange St, Geneva, NY 14456",
+      "monitor_enabled": false,
+      "note": "Discovery only until exact sealed-product matches and stock responses are verified."
     },
     "walmart": {
-      "enabled": true,
+      "enabled": false,
       "street_match": "990 NY-5",
       "store_id": "1731",
       "display_name": "Walmart Supercenter - Geneva",
-      "address": "990 NY-5 and 20, Geneva, NY 14456"
+      "address": "990 NY-5 and 20, Geneva, NY 14456",
+      "monitor_enabled": false,
+      "note": "Paused: discovery found only third-party marketplace sellers; retain configuration for possible future revisit."
     },
     "staples": {
       "enabled": false,
@@ -28,14 +34,17 @@
       "store_id": null,
       "display_name": "Staples - 337 Hamilton St",
       "address": "337 Hamilton St, Geneva, NY 14456",
-      "note": "Disabled until a verified store-level inventory adapter is available."
+      "note": "Disabled until a verified store-level inventory adapter is available.",
+      "monitor_enabled": false
     },
     "target": {
       "enabled": true,
       "store_id": "1156",
       "display_name": "Target - Victor",
       "address": "7500 Commons Blvd, Victor, NY 14564",
-      "postal_code": "14564"
+      "postal_code": "14564",
+      "monitor_enabled": false,
+      "note": "Discovery only; no verified first-party product listings or validated availability monitoring."
     }
   }
 }

@@ -11,14 +11,14 @@
     "dollar_general": {
       "enabled": true,
       "street_match": "194 N Exchange",
-      "store_id": null,
+      "store_id": "14405",
       "display_name": "Dollar General - 194 N Exchange St",
       "address": "194 N Exchange St, Geneva, NY 14456"
     },
     "walmart": {
       "enabled": true,
       "street_match": "990 NY-5",
-      "store_id": null,
+      "store_id": "1731",
       "display_name": "Walmart Supercenter - Geneva",
       "address": "990 NY-5 and 20, Geneva, NY 14456"
     },

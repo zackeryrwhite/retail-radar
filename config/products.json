@@ -1,14 +1,33 @@
 [
   {
-    "key": "prismatic_evolutions_etb",
-    "name": "Prismatic Evolutions ETB",
-    "search_query": "Pokemon TCG Scarlet Violet Prismatic Evolutions Elite Trainer Box",
+    "key": "delta_reign_booster_bundle",
+    "name": "Delta Reign Booster Bundle",
+    "search_query": "Pokemon TCG Mega Evolution Delta Reign Booster Bundle",
     "retailers": {
       "walgreens": {
         "product_id": null
       },
       "dollar_general": {
-        "upc": null
+        "upc": "196214165823"
+      },
+      "walmart": {
+        "item_id": null
+      },
+      "staples": {
+        "sku": null
+      }
+    }
+  },
+  {
+    "key": "30th_celebration_booster_bundle",
+    "name": "30th Celebration Booster Bundle",
+    "search_query": "Pokemon TCG 30th Celebration Booster Bundle",
+    "retailers": {
+      "walgreens": {
+        "product_id": null
+      },
+      "dollar_general": {
+        "upc": "196214158849"
       },
       "walmart": {
         "item_id": null
@@ -27,26 +46,7 @@
         "product_id": null
       },
       "dollar_general": {
-        "upc": null
-      },
-      "walmart": {
-        "item_id": null
-      },
-      "staples": {
-        "sku": null
-      }
-    }
-  },
-  {
-    "key": "delta_reign_booster_bundle",
-    "name": "Delta Reign Booster Bundle",
-    "search_query": "Pokemon TCG Mega Evolution Delta Reign Booster Bundle",
-    "retailers": {
-      "walgreens": {
-        "product_id": null
-      },
-      "dollar_general": {
-        "upc": null
+        "upc": "196214157484"
       },
       "walmart": {
         "item_id": null

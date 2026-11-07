@@ -19,6 +19,12 @@ def show(label, rows, idkey, titlekey):
             "available_quantity": x.get("available_quantity"),
             "in_stock": x.get("in_stock"),
             "availability": x.get("availability"),
+            "seller_name": x.get("seller_name"),
+            "seller_type": x.get("seller_type"),
+            "seller_catalog_id": x.get("seller_catalog_id"),
+            "seller_id": x.get("seller_id"),
+            "is_marketplace": x.get("is_marketplace"),
+            "seller_is_walmart": str(x.get("seller_name", "")).strip().lower() == "walmart.com" and x.get("is_marketplace") is not True,
             "url": x.get("url"),
         })
 

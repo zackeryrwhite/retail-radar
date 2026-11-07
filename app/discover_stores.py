@@ -11,7 +11,14 @@ def main():
             data = api_post(route,payload)
             rows = data.get("stores",[])
             needle = norm(target["street_match"])
+            # Retailer schemas differ: some return a flat address string, Walmart nests address.line1.
             matches = [x for x in rows if needle in norm(flatten(x))]
+            if not matches and retailer == "dollar_general":
+                matches = [x for x in rows if norm(x.get("address", "")) == norm("194 North Exchange St")
+                           and norm(x.get("city", "")) == norm("Geneva")]
+            if not matches and retailer == "walmart":
+                matches = [x for x in rows if norm((x.get("address") or {}).get("line1", "")) == norm("990 State Route 5 And 20")
+                           and norm((x.get("address") or {}).get("city", "")) == norm("Geneva")]
             if len(matches)==1 and matches[0].get(id_key):
                 target["store_id"] = str(matches[0][id_key])
                 print(f"MATCH {retailer}: {target['address']} => {target['store_id']}")

@@ -20,6 +20,14 @@ def main():
     products=load_json("config/products.json")
     cfg=load_json("config/stores.json")
     state=load_json("data/state.json",{})
+    configured = any(
+      ids[retailer].get(field)
+      for p in products for retailer, field in [
+        ("walgreens","product_id"),("dollar_general","upc"),("walmart","item_id")]
+    )
+    if not configured:
+      print("No product identifiers configured yet; skipping this run without writing state.")
+      return
     observations=[]; errors=[]
     for p in products:
       ids=p["retailers"]

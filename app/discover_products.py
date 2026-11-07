@@ -1,7 +1,7 @@
 from app.common import load_json, api_post
 
 def show(label, rows, idkey, titlekey):
-    print("\\n" + label)
+    print("\n" + label)
     terms = ("booster bundle", "elite trainer box")
     candidates = [x for x in rows if any(t in str(x.get(titlekey, "")).lower() for t in terms)]
     if not candidates:
@@ -13,6 +13,8 @@ def show(label, rows, idkey, titlekey):
             "title": x.get(titlekey),
             "upc": x.get("upc"),
             "sku": x.get("sku"),
+            "dpci": x.get("dpci"),
+            "is_marketplace": x.get("is_marketplace"),
             "price": x.get("price"),
             "available_quantity": x.get("available_quantity"),
             "in_stock": x.get("in_stock"),
@@ -27,7 +29,7 @@ def main():
     for p in products:
         q = p["search_query"]
         upc = p.get("upc")
-        print("\\n###", p["name"], "| UPC:", upc, "| query:", q)
+        print("\n###", p["name"], "| UPC:", upc, "| query:", q)
         searches = [
             ("walgreens", "walgreens/search",
              {"query": upc or q, "store_id": loc["walgreens"].get("store_id")},
@@ -39,6 +41,9 @@ def main():
              {"query": q, "store_id": loc["walmart"].get("store_id"),
               "delivery_zip": cfg["postal_code"], "domain": "com"},
              "id", "title"),
+            ("target", "target/search",
+             {"keyword": q, "store_id": loc["target"].get("store_id")},
+             "tcin", "title"),
         ]
         for retailer, route, payload, idkey, titlekey in searches:
             if not loc[retailer].get("enabled") or not loc[retailer].get("store_id"):
@@ -48,8 +53,8 @@ def main():
                 show(retailer.upper(), data.get("products", []), idkey, titlekey)
             except Exception as e:
                 print("ERROR", retailer, e)
-    print("\\nOnly use an identifier when the exact sealed product matches.")
-    print("Walgreens: product_id; Dollar General: UPC; Walmart: item_id. Staples disabled.")
+    print("\nOnly use an identifier when the exact sealed product matches.")
+    print("Walgreens: product_id; Dollar General: UPC; Walmart: item_id; Target: TCIN. Staples disabled.")
 
 if __name__ == "__main__":
     main()

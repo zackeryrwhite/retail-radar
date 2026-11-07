@@ -1,6 +1,6 @@
 # Retail Radar
 
-Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Discord alerts.
+Pokémon TCG product discovery for selected retailers, with gated inventory checks and Discord alerts.
 
 ## Integrations
 - Walgreens: store lookup, product search, and stock lookup.
@@ -61,7 +61,7 @@ Retail Radar only treats a Walmart listing as eligible for Walmart stock alerts 
 - Alerts fire on the first positive stock observation and when a product changes from out of stock to in stock.
 - Unknown stock responses are logged as errors, not treated as out of stock.
 - Inventory can be delayed or inaccurate; confirm with the retailer before travelling.
-- Scheduled GitHub Actions can be delayed and are not a continuously running service.
+- Inventory monitoring is currently manual-only; the 15-minute schedule is paused until at least one retailer's product matching and stock endpoint are verified.
 - API routes and response fields still need to be validated against your current Scavio account/docs before relying on live alerts. Review credit usage before enabling scheduled polling.
 
 ## Local use

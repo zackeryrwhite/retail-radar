@@ -4,7 +4,7 @@
     "walgreens": {
       "enabled": true,
       "street_match": "431 Hamilton",
-      "store_id": null,
+      "store_id": "10697",
       "display_name": "Walgreens - 431 Hamilton St",
       "address": "431 Hamilton St, Geneva, NY 14456"
     },

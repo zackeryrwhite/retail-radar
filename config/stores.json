@@ -29,6 +29,13 @@
       "display_name": "Staples - 337 Hamilton St",
       "address": "337 Hamilton St, Geneva, NY 14456",
       "note": "Disabled until a verified store-level inventory adapter is available."
+    },
+    "target": {
+      "enabled": true,
+      "store_id": "1156",
+      "display_name": "Target - Victor",
+      "address": "7500 Commons Blvd, Victor, NY 14564",
+      "postal_code": "14564"
     }
   }
 }

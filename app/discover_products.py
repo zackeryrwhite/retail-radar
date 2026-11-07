@@ -53,6 +53,44 @@ def main():
                 show(retailer.upper(), data.get("products", []), idkey, titlekey)
             except Exception as e:
                 print("ERROR", retailer, e)
+    # Walgreens assortment WICs are separate from set-specific product identifiers.
+    # Positive assortment results indicate a broad category, not a specific set.
+    try:
+        assortments = load_json("config/walgreens_assortments.json")
+        walgreens = loc["walgreens"]
+        if walgreens.get("enabled") and walgreens.get("store_id"):
+            print("\\n### WALGREENS ASSORTMENT WATCHLIST (not set-specific)")
+            for item in assortments:
+                code = item["wic"]
+                try:
+                    data = api_post("walgreens/search", {
+                        "query": code,
+                        "store_id": walgreens.get("store_id"),
+                    })
+                    rows = data.get("products", [])
+                    print({
+                        "wic_query": code,
+                        "category": item["category"],
+                        "interpretation": item["interpretation"],
+                        "matches_returned": len(rows),
+                    })
+                    for row in rows:
+                        print({
+                            "wic_query": code,
+                            "product_id": row.get("product_id"),
+                            "title": row.get("name"),
+                            "upc": row.get("upc"),
+                            "price": row.get("price"),
+                            "availability": row.get("availability"),
+                            "url": row.get("url"),
+                        })
+                    if not rows:
+                        print("NO MATCHES for WIC query", code)
+                except Exception as e:
+                    print("WALGREENS ASSORTMENT ERROR", code, e)
+    except FileNotFoundError:
+        print("Walgreens assortment config not found; skipping assortment searches.")
+
     print("\nOnly use an identifier when the exact sealed product matches.")
     print("Walgreens: product_id; Dollar General: UPC; Walmart: item_id; Target: TCIN. Staples disabled.")
 

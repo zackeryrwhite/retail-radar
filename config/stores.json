@@ -1,0 +1,34 @@
+{
+  "postal_code": "14456",
+  "locations": {
+    "walgreens": {
+      "enabled": true,
+      "street_match": "431 Hamilton",
+      "store_id": null,
+      "display_name": "Walgreens - 431 Hamilton St",
+      "address": "431 Hamilton St, Geneva, NY 14456"
+    },
+    "dollar_general": {
+      "enabled": true,
+      "street_match": "194 N Exchange",
+      "store_id": null,
+      "display_name": "Dollar General - 194 N Exchange St",
+      "address": "194 N Exchange St, Geneva, NY 14456"
+    },
+    "walmart": {
+      "enabled": true,
+      "street_match": "990 NY-5",
+      "store_id": null,
+      "display_name": "Walmart Supercenter - Geneva",
+      "address": "990 NY-5 and 20, Geneva, NY 14456"
+    },
+    "staples": {
+      "enabled": false,
+      "street_match": "337 Hamilton",
+      "store_id": null,
+      "display_name": "Staples - 337 Hamilton St",
+      "address": "337 Hamilton St, Geneva, NY 14456",
+      "note": "Disabled until a verified store-level inventory adapter is available."
+    }
+  }
+}

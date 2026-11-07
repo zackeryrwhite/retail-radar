@@ -1,0 +1,22 @@
+[
+  {
+    "wic": "665814",
+    "category": "Universal Pokémon pack assortment",
+    "interpretation": "May include booster packs, blisters, and individual packs; not set-specific."
+  },
+  {
+    "wic": "941046",
+    "category": "Mini-tin assortment",
+    "interpretation": "Combined assortment lookup; does not identify a particular mini-tin or set."
+  },
+  {
+    "wic": "300443630",
+    "category": "Pokémon TCG online assortment baseline",
+    "interpretation": "Broad online assortment identifier; not proof of a specific set at the Geneva store."
+  },
+  {
+    "wic": "300425671",
+    "category": "Third-party packaged Pokémon Trading Cards Lightning Set",
+    "interpretation": "Third-party packaged product category; not a booster-bundle identifier."
+  }
+]

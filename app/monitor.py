@@ -31,7 +31,7 @@ def main():
         ("walgreens","product_id"),("dollar_general","upc"),("walmart","item_id"),("target","tcin")]
     )
     if not configured:
-      print("No product identifiers configured yet; skipping this run without writing state.")
+      print("No verified, monitor-enabled product identifiers configured; skipping this run without writing state.")
       return
     observations=[]; errors=[]
     for p in products:

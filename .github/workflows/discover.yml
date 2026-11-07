@@ -1,0 +1,33 @@
+name: Discover Stores and Products
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Resolve store IDs
+        env:
+          SCAVIO_API_KEY: ${{ secrets.SCAVIO_API_KEY }}
+        run: python -m app.discover_stores
+      - name: Print product candidates
+        env:
+          SCAVIO_API_KEY: ${{ secrets.SCAVIO_API_KEY }}
+        run: python -m app.discover_products
+      - name: Commit store IDs
+        run: |
+          git config user.name "retail-radar[bot]"
+          git config user.email "retail-radar[bot]@users.noreply.github.com"
+          git add config/stores.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: resolve retailer store IDs"
+            git push
+          fi

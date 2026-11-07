@@ -5,7 +5,7 @@ Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Dis
 ## Integrations
 - Walgreens: store lookup, product search, and stock lookup.
 - Dollar General: store lookup, product search, and UPC-based stock lookup.
-- Walmart: store lookup and store-targeted product search.
+- Walmart: paused; discovery found only third-party marketplace sellers, so no Walmart stock monitoring is active.
 - Target: product search by TCIN and store-level availability at Victor store 1156.
 - Staples: disabled until a verified store-level inventory integration is available.
 
@@ -16,7 +16,7 @@ Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Dis
 - Target: 7500 Commons Blvd, Victor, NY 14564 (store 1156)
 - Staples: 337 Hamilton St, Geneva, NY 14456 (disabled)
 
-Store IDs are configured: Walgreens 10697, Dollar General 14405, Walmart 1731, and Target Victor 1156.
+Store IDs are configured: Walgreens 10697, Dollar General 14405, Walmart 1731 (paused), and Target Victor 1156.
 
 ## Products
 - Delta Reign Booster Bundle
@@ -48,6 +48,10 @@ These are assortment/catalog lookup codes, not verified set-specific product IDs
    - Target: `tcin`
    Leave unmatched IDs as `null`.
 5. Run **Actions → Inventory Monitor → Run workflow** to test. Monitoring is scheduled every 15 minutes after setup.
+
+## Monitoring status
+
+Retailer discovery and live inventory monitoring are controlled separately. Walmart is paused entirely after the latest discovery run returned only third-party sellers. Walgreens, Dollar General, and Target remain available for discovery, but live monitoring is disabled until exact product matches and reliable stock responses are verified. Set a retailer's `monitor_enabled` to `true` only after that verification.
 
 ## Walmart seller verification
 

@@ -48,6 +48,15 @@ def main():
           data=api_post(route,payload)
           row=by_id(data.get(listkey,[]),idkeys,store["store_id"] if retailer!="walmart" else ident)
           if row is None: raise ValueError("Configured store/product was not present in response.")
+          if retailer == "walmart":
+            seller_name = str(row.get("seller_name") or "").strip().lower()
+            seller_type = str(row.get("seller_type") or "").strip().upper()
+            if seller_name != "walmart.com" or row.get("is_marketplace") is True or (seller_type and seller_type != "INTERNAL"):
+              raise ValueError(
+                "Skipping Walmart listing: seller is not verified as Walmart.com "
+                f"(seller_name={row.get('seller_name')!r}, seller_type={row.get('seller_type')!r}, "
+                f"is_marketplace={row.get('is_marketplace')!r})."
+              )
           flag=in_stock(row)
           if flag is None: raise ValueError("Response did not contain a recognized stock status.")
           key=f"{retailer}:{store['store_id']}:{p['key']}"

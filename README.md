@@ -6,12 +6,14 @@ Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Dis
 - Walgreens: store lookup, product search, and stock lookup.
 - Dollar General: store lookup, product search, and UPC-based stock lookup.
 - Walmart: store lookup and store-targeted product search.
+- Target: product search by TCIN and store-level availability at Victor store 1156.
 - Staples: disabled until a verified store-level inventory integration is available.
 
 ## Initial store targets
 - Walgreens: 431 Hamilton St, Geneva, NY 14456
 - Dollar General: 194 N Exchange St, Geneva, NY 14456
 - Walmart: 990 NY-5 and 20, Geneva, NY 14456
+- Target: 7500 Commons Blvd, Victor, NY 14564 (store 1156)
 - Staples: 337 Hamilton St, Geneva, NY 14456 (disabled)
 
 These are initial targets, not yet confirmed store IDs. Discovery matches street text against returned store data and does not choose a nearby store automatically.

@@ -16,12 +16,12 @@ Scheduled Pokémon TCG inventory checks for selected Geneva, NY stores, with Dis
 - Target: 7500 Commons Blvd, Victor, NY 14564 (store 1156)
 - Staples: 337 Hamilton St, Geneva, NY 14456 (disabled)
 
-These are initial targets, not yet confirmed store IDs. Discovery matches street text against returned store data and does not choose a nearby store automatically.
+Store IDs are configured: Walgreens 10697, Dollar General 14405, Walmart 1731, and Target Victor 1156.
 
 ## Products
-- Prismatic Evolutions ETB
-- Pitch Black Booster Bundle
 - Delta Reign Booster Bundle
+- 30th Celebration Booster Bundle
+- Pitch Black Booster Bundle
 
 Product identifiers are intentionally blank until exact variants are confirmed.
 
@@ -29,12 +29,13 @@ Product identifiers are intentionally blank until exact variants are confirmed.
 1. In **Settings → Secrets and variables → Actions**, add repository secrets:
    - `SCAVIO_API_KEY`
    - `DISCORD_WEBHOOK_URL`
-2. Open **Actions → Discover Stores and Products → Run workflow**.
-3. Inspect the logs. The workflow commits matched store IDs and prints product candidates.
+2. Open **Actions → Discover Products → Run workflow**.
+3. Inspect the logs for exact sealed-product matches and retailer-specific identifiers. Store IDs are already configured.
 4. Confirm exact set, packaging, and variant, then fill the matching IDs in `config/products.json`:
    - Walgreens: `product_id`
    - Dollar General: `upc`
    - Walmart: `item_id`
+   - Target: `tcin`
    Leave unmatched IDs as `null`.
 5. Run **Actions → Inventory Monitor → Run workflow** to test. Monitoring is scheduled every 15 minutes after setup.
 
@@ -51,7 +52,6 @@ Python 3.11+:
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m app.discover_stores
 python -m app.discover_products
 python -m app.monitor
 ```

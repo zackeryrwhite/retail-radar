@@ -25,7 +25,8 @@ def main():
     cfg=load_json("config/stores.json")
     state=load_json("data/state.json",{})
     configured = any(
-      ids[retailer].get(field)
+      cfg["locations"].get(retailer, {}).get("monitor_enabled", False)
+      and ids[retailer].get(field)
       for p in products for retailer, field in [
         ("walgreens","product_id"),("dollar_general","upc"),("walmart","item_id"),("target","tcin")]
     )
@@ -43,7 +44,7 @@ def main():
       for retailer,route,payload,idkeys,listkey in checks:
         store=cfg["locations"][retailer]
         ident=ids[retailer].get({"walgreens":"product_id","dollar_general":"upc","walmart":"item_id","target":"tcin"}[retailer])
-        if not store.get("enabled") or not store.get("store_id") or not ident: continue
+        if not store.get("enabled") or not store.get("monitor_enabled", False) or not store.get("store_id") or not ident: continue
         try:
           data=api_post(route,payload)
           row=by_id(data.get(listkey,[]),idkeys,store["store_id"] if retailer!="walmart" else ident)

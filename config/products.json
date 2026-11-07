@@ -2,7 +2,7 @@
   {
     "key": "prismatic_evolutions_etb",
     "name": "Prismatic Evolutions ETB",
-    "search_query": "Pokemon Prismatic Evolutions Elite Trainer Box",
+    "search_query": "Pokemon TCG Scarlet Violet Prismatic Evolutions Elite Trainer Box",
     "retailers": {
       "walgreens": {
         "product_id": null
@@ -21,7 +21,7 @@
   {
     "key": "pitch_black_booster_bundle",
     "name": "Pitch Black Booster Bundle",
-    "search_query": "Pokemon Pitch Black Booster Bundle",
+    "search_query": "Pokemon TCG Mega Evolution Pitch Black Booster Bundle",
     "retailers": {
       "walgreens": {
         "product_id": null
@@ -40,7 +40,7 @@
   {
     "key": "delta_reign_booster_bundle",
     "name": "Delta Reign Booster Bundle",
-    "search_query": "Pokemon Delta Reign Booster Bundle",
+    "search_query": "Pokemon TCG Mega Evolution Delta Reign Booster Bundle",
     "retailers": {
       "walgreens": {
         "product_id": null

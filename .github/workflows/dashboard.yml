@@ -5,7 +5,6 @@ on:
     paths:
       - "docs/**"
       - "config/**"
-      - "data/latest.json"
       - "app/dashboard_refresh.py"
       - ".github/workflows/dashboard.yml"
   workflow_dispatch:
@@ -36,7 +35,7 @@ jobs:
           python -m app.dashboard_refresh
           git config user.name "retail-radar[bot]"
           git config user.email "retail-radar[bot]@users.noreply.github.com"
-          git add data/latest.json
+          git add data/latest.json data/history.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: publish manual inventory refresh"
             git push
@@ -46,6 +45,7 @@ jobs:
           cp config/products.json docs/products.json
           cp config/stores.json docs/stores.json
           cp data/latest.json docs/latest.json
+          cp data/history.json docs/history.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -44,8 +44,8 @@ def main():
             results.append(check(
                 product, "walgreens", store, "walgreens/stock",
                 {"product_id": product_id, "store_ids": [store["store_id"]]},
-                "stores", ["store_number", "store_id"], store["store_id"]
-            , errors))
+                "stores", ["store_number", "store_id"], store["store_id"], errors
+            ))
 
         # Dollar General: UPC lookup is retained but only runs after explicit
         # monitor enablement and a configured store ID.

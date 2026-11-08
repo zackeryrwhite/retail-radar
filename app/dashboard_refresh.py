@@ -17,8 +17,10 @@ def stock_flag(row):
     in_store = str(row.get("in_store") or "").lower().strip()
     if in_store in {"in_stock", "limited_stock_see_store"}:
         return True
-    if in_store in {"out_of_stock", "unavailable", "not_sold_in_store"}:
+    if in_store in {"out_of_stock", "unavailable"}:
         return False
+    if in_store == "not_sold_in_store":
+        return None
     availability = row.get("availability")
     if isinstance(availability, dict):
         for key in ("in_store", "pickup"):
@@ -36,7 +38,6 @@ def main():
     for product in products:
         retailer_ids = product.get("retailers", {})
 
-        # Walgreens: only exact product IDs, explicitly enabled for monitoring.
         store = locations.get("walgreens", {})
         product_id = retailer_ids.get("walgreens", {}).get("product_id")
         if store.get("enabled") and store.get("monitor_enabled") and store.get("store_id") and product_id:
@@ -47,8 +48,6 @@ def main():
                 "stores", ["store_number", "store_id"], store["store_id"], errors
             ))
 
-        # Dollar General: UPC lookup is retained but only runs after explicit
-        # monitor enablement and a configured store ID.
         store = locations.get("dollar_general", {})
         upc = retailer_ids.get("dollar_general", {}).get("upc")
         if store.get("enabled") and store.get("monitor_enabled") and store.get("store_id") and upc:
@@ -59,16 +58,45 @@ def main():
                 "stores", ["store_id"], store["store_id"], errors
             ))
 
+    generated_at = now_iso()
     payload = {
-        "generated_at": now_iso(),
+        "generated_at": generated_at,
         "status": "no_eligible_checks" if eligible == 0 else ("completed_with_errors" if errors else "completed"),
         "eligible_checks": eligible,
         "results": results,
         "errors": errors,
         "message": "No verified, monitor-enabled product/store combinations are configured." if eligible == 0 else None,
     }
+
+    # Append each manual run and its observations. Keep bounded history so the
+    # GitHub Pages artifact stays small and repository commits remain manageable.
+    history = load_json("data/history.json", {"runs": [], "observations": []})
+    runs = history.get("runs", [])
+    observations = history.get("observations", [])
+    runs.append({
+        "generated_at": generated_at,
+        "status": payload["status"],
+        "eligible_checks": eligible,
+        "result_count": len(results),
+        "error_count": len(errors),
+    })
+    for result in results:
+        observations.append({
+            **result,
+            "run_at": generated_at,
+            "observation_key": "|".join([
+                result.get("retailer", ""),
+                result.get("store", ""),
+                result.get("product", ""),
+            ]),
+        })
+    history["runs"] = runs[-250:]
+    history["observations"] = observations[-1000:]
+    history["retention"] = {"max_runs": 250, "max_observations": 1000}
+
     save_json("data/latest.json", payload)
-    print(f"Dashboard refresh complete: {eligible} eligible checks, {len(errors)} errors.")
+    save_json("data/history.json", history)
+    print(f"Dashboard refresh complete: {eligible} eligible checks, {len(errors)} errors; history now has {len(history['observations'])} observations.")
 
 def check(product, retailer, store, route, request_payload, list_key, id_keys, store_id, errors):
     result = {

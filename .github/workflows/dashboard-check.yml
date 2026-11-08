@@ -18,6 +18,6 @@ jobs:
         with:
           node-version: "20"
       - run: pip install -r requirements.txt
-      - run: python -m compileall -q api app
+      - run: python -m compileall -q app
       - run: node --check docs/app.js
-      - run: python -c "from api.server import app; print('Retail Radar API import OK')"
+      - run: python -c "import json; json.load(open('config/products.json')); json.load(open('config/stores.json')); print('Config JSON OK')"

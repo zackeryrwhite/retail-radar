@@ -9,20 +9,13 @@ from collections import defaultdict, deque
 import requests
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 ROOT = Path(__file__).resolve().parents[1]
 API_BASE = "https://api.scavio.dev/api/v1"
 TIMEOUT = 45
 security = HTTPBasic()
 app = FastAPI(title="Retail Radar API", version="1.0.0")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type"],
-)
 
 _requests = defaultdict(deque)
 
@@ -179,3 +172,6 @@ def refresh(request: Request, _: bool = Depends(require_dashboard)):
     }
     # Render's filesystem is ephemeral; the browser retains the latest result.
     return response
+
+# Serve the dashboard and API from one HTTPS origin.
+app.mount("/", StaticFiles(directory=ROOT / "docs", html=True), name="dashboard")

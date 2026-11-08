@@ -10,7 +10,7 @@ on:
       - ".github/workflows/dashboard.yml"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -32,7 +32,15 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         env:
           SCAVIO_API_KEY: ${{ secrets.SCAVIO_API_KEY }}
-        run: python -m app.dashboard_refresh
+        run: |
+          python -m app.dashboard_refresh
+          git config user.name "retail-radar[bot]"
+          git config user.email "retail-radar[bot]@users.noreply.github.com"
+          git add data/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: publish manual inventory refresh"
+            git push
+          fi
       - name: Prepare dashboard data
         run: |
           cp config/products.json docs/products.json

@@ -73,3 +73,8 @@ pip install -r requirements.txt
 python -m app.discover_products
 python -m app.monitor
 ```
+
+
+## Retail Radar Dashboard
+
+A click-to-refresh dashboard is included. It performs no background polling and keeps the Scavio API key on the server. See [Dashboard deployment instructions](README-DASHBOARD.md) and use the [one-click Render deployment](https://render.com/deploy?repo=https://github.com/zackeryrwhite/retail-radar).

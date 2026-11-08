@@ -11,8 +11,8 @@
 <header class="topbar"><a class="brand" href="#"><span class="brand-mark">RR</span><span>RETAIL <b>RADAR</b></span></a><span class="live-label"><i></i> MANUAL MODE</span></header>
 <main>
 <section class="hero">
-  <div><p class="eyebrow">POKÉMON TCG · GENEVA, NEW YORK</p><h1>Find the next<br><em>restock.</em></h1><p class="sub">A live look at your selected retailers. Nothing runs until you ask it to.</p></div>
-  <div class="refresh-panel"><span class="eyebrow">ON-DEMAND INVENTORY CHECK</span><button id="refreshAll" class="refresh"><span>↻</span> Refresh All</button><p id="refreshHint">Checks eligible retailer and product combinations only.</p><div id="progress" class="progress" hidden><span></span></div></div>
+  <div><p class="eyebrow">POKÉMON TCG · GENEVA, NEW YORK</p><h1>Find the next<br><em>restock.</em></h1><p class="sub">Your selected retailers, checked only when you ask. No background polling or scheduled inventory requests.</p></div>
+  <div class="refresh-panel"><span class="eyebrow">ON-DEMAND INVENTORY CHECK</span><a id="refreshAll" class="refresh" href="https://github.com/zackeryrwhite/retail-radar/actions/workflows/dashboard.yml" target="_blank" rel="noopener"><span>↻</span> Refresh All</a><p id="refreshHint">Opens GitHub's secure Run workflow screen. Confirm the run there, then return and reload this dashboard when it finishes.</p></div>
 </section>
 <section class="summary-grid">
  <article class="metric"><span>WATCHLIST</span><strong id="productCount">—</strong><small>Products tracked</small></article>
@@ -20,13 +20,12 @@
  <article class="metric"><span>LAST REFRESH</span><strong id="lastRefresh">—</strong><small>Manual only</small></article>
 </section>
 <section class="section-head"><div><p class="eyebrow">YOUR WATCHLIST</p><h2>Products</h2></div><span id="productNote" class="muted"></span></section>
-<div id="products" class="product-grid"><div class="loading">Connecting to Retail Radar…</div></div>
+<div id="products" class="product-grid"><div class="loading">Loading watchlist…</div></div>
 <section class="section-head retailers-head"><div><p class="eyebrow">LOCAL COVERAGE</p><h2>Retailers</h2></div><span class="muted">Configured locations</span></section>
 <div id="stores" class="store-list"></div>
 <section class="section-head"><div><p class="eyebrow">LATEST MANUAL CHECK</p><h2>Inventory results</h2></div><span id="resultCount" class="muted">No checks yet</span></section>
-<div id="results" class="results"><div class="empty">Press Refresh All to run an inventory check. No background polling is enabled.</div></div>
+<div id="results" class="results"><div class="empty">No inventory check has been published yet.</div></div>
 <footer><span>RETAIL RADAR</span><span>Click to check. No automatic refresh.</span></footer>
 </main>
-<div id="login" class="login-overlay"><form id="loginForm" class="login-card"><div class="brand-mark">RR</div><p class="eyebrow">PRIVATE DASHBOARD</p><h2>Welcome back.</h2><p>Enter your dashboard password to connect.</p><input id="password" type="password" placeholder="Dashboard password" autocomplete="current-password" required><button class="refresh" type="submit">Connect</button><p id="loginError" class="error"></p></form></div>
-<script src="config.js"></script><script src="app.js"></script>
+<script src="app.js"></script>
 </body></html>

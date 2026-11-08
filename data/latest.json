@@ -1,6 +1,8 @@
 {
   "generated_at": null,
-  "status": "Not configured",
-  "observations": [],
-  "message": "Run discovery, confirm product identifiers, then start monitoring."
+  "status": "no_eligible_checks",
+  "eligible_checks": 0,
+  "results": [],
+  "errors": [],
+  "message": "No verified, monitor-enabled product/store combinations are configured."
 }

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: retail-radar-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: SCAVIO_API_KEY
+        sync: false
+      - key: DASHBOARD_PASSWORD
+        sync: false

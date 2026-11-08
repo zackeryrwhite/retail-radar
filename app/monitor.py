@@ -26,7 +26,7 @@ def main():
     state=load_json("data/state.json",{})
     configured = any(
       cfg["locations"].get(retailer, {}).get("monitor_enabled", False)
-      and ids[retailer].get(field)
+      and p["retailers"][retailer].get(field)
       for p in products for retailer, field in [
         ("walgreens","product_id"),("dollar_general","upc"),("walmart","item_id"),("target","tcin")]
     )

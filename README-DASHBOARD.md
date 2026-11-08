@@ -1,35 +1,38 @@
 # Retail Radar Dashboard
 
-The dashboard and its authenticated API run together as one Render web service. Scavio credentials stay on the server and are never sent to the browser.
+The dashboard is a static GitHub Pages site. Inventory checks run in GitHub Actions only when you manually start the **Retail Radar Dashboard** workflow.
 
-## Manual-only behavior
-- The dashboard does not poll or refresh in the background.
-- Inventory requests are sent only after a user presses **Refresh All**.
-- The API checks only enabled retailers with `monitor_enabled: true` and a verified product identifier.
-- Walmart and Target are intentionally excluded from live checks pending validated first-party and store-level inventory integrations.
-- The API has a password gate and a per-IP refresh limit.
+## How Refresh All works
+1. Press **Refresh All** on the dashboard.
+2. GitHub opens its authenticated workflow page. Press **Run workflow**.
+3. GitHub Actions runs the Python checker using the repository's `SCAVIO_API_KEY` secret.
+4. The workflow publishes the new inventory snapshot to GitHub Pages.
+5. Return to the dashboard and reload it to see the latest results.
 
-## Deploy
-1. Open the [Render one-click deployment page](https://render.com/deploy?repo=https://github.com/zackeryrwhite/retail-radar).
-2. Connect GitHub and review the `retail-radar-api` service from `render.yaml`.
-3. Enter your existing `SCAVIO_API_KEY` as the secret value and create a strong `DASHBOARD_PASSWORD`. These values are stored by Render, not committed to GitHub.
-4. Deploy. Render will provide one HTTPS URL; open it to use the dashboard.
+A public static webpage cannot safely contain a GitHub token, so the GitHub confirmation step is intentional. No token or API key is stored in browser code.
 
-The service is configured on Render's free plan. It may sleep while idle, so the first visit or refresh after a period of inactivity can take longer. No paid database or persistent disk is required for the initial manual dashboard.
+## Publish the dashboard
+1. In the repository, open **Settings → Pages**.
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+3. The `.github/workflows/dashboard.yml` workflow publishes the `docs` folder on changes and after manual refresh runs.
+4. Open the Pages URL shown in **Settings → Pages**.
 
-## Current retailer eligibility
-At present, the product watchlist has no verified retailer-specific product IDs and the current retailer configurations have monitoring disabled. Therefore **Refresh All will initially report zero eligible checks** rather than spend API credits on unverified matches. Once a retailer's exact product match and stock response have been independently validated, set its `monitor_enabled` flag to `true` in `config/stores.json` and populate the corresponding product identifier in `config/products.json`. The dashboard will then include those checks automatically on the next deploy.
+## Secrets
+The existing `SCAVIO_API_KEY` Actions repository secret is used by the manual refresh workflow. The workflow does not use the Discord webhook and does not send Discord alerts.
 
-Only Walgreens and Dollar General adapters are currently implemented in the dashboard API. Walmart remains paused; Target remains discovery-only; Staples is unsupported.
+## Retailer safety and eligibility
+Only retailers with an implemented, validated inventory adapter, an enabled store, `monitor_enabled: true`, a store ID, and a retailer-specific product identifier are checked.
 
-## API routes
-- `GET /api/health` public health check
-- `GET /api/dashboard` authenticated configuration and latest committed snapshot
-- `POST /api/refresh` authenticated manual refresh
+- Walgreens: adapter present; currently disabled for monitoring and no verified set-specific product IDs.
+- Dollar General: adapter present; currently disabled for monitoring. UPC search did not produce verified exact matches.
+- Walmart: paused; discovery found only third-party marketplace listings.
+- Target: discovery only; no validated first-party store-level stock adapter.
+- Staples: unsupported.
 
-The dashboard password is sent only over HTTPS using HTTP Basic authentication. Rotate it by changing `DASHBOARD_PASSWORD` in the Render service environment.
+Consequently, the current watchlist has zero eligible live checks. Refresh All will publish that status without spending Scavio credits on unverified products or retailers.
 
-## Notes
-- No scheduled inventory checks, background polling, or Discord notifications are triggered by this dashboard.
-- The initial API response is displayed in the browser session; Render's free filesystem is ephemeral, so the service does not promise durable refresh history.
-- Inventory can be delayed or inaccurate; confirm with the retailer before travelling.
+## Manual-only guarantees
+- No scheduled inventory polling.
+- No automatic browser refresh or polling.
+- No Discord notifications from the dashboard refresh workflow.
+- Refreshes are started only through GitHub's authenticated Actions UI.

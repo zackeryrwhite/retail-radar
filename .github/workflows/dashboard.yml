@@ -1,0 +1,45 @@
+name: Retail Radar Dashboard
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "config/**"
+      - "data/latest.json"
+      - "app/dashboard_refresh.py"
+      - ".github/workflows/dashboard.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: retail-radar-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run manual inventory refresh
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          SCAVIO_API_KEY: ${{ secrets.SCAVIO_API_KEY }}
+        run: python -m app.dashboard_refresh
+      - name: Prepare dashboard data
+        run: |
+          cp config/products.json docs/products.json
+          cp config/stores.json docs/stores.json
+          cp data/latest.json docs/latest.json
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - uses: actions/deploy-pages@v4

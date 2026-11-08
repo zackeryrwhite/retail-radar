@@ -1,85 +1,50 @@
 # Retail Radar
 
-Pokémon TCG product discovery and a manual-refresh GitHub Pages inventory dashboard.
+Pokémon TCG product discovery and a manual-refresh inventory dashboard for selected retailers.
 
-## Integrations
-- Walgreens: store lookup, product search, and stock lookup.
-- Dollar General: store lookup, product search, and UPC-based stock lookup.
-- Walmart: paused; discovery found only third-party marketplace sellers, so no Walmart stock monitoring is active.
-- Target: discovery only; store-level availability monitoring is not yet validated.
-- Staples: disabled until a verified store-level inventory integration is available.
+## Dashboard
 
-## Initial store targets
-- Walgreens: 431 Hamilton St, Geneva, NY 14456
-- Dollar General: 194 N Exchange St, Geneva, NY 14456
-- Walmart: 990 NY-5 and 20, Geneva, NY 14456
-- Target: 7500 Commons Blvd, Victor, NY 14564 (store 1156)
-- Staples: 337 Hamilton St, Geneva, NY 14456 (disabled)
+The dashboard is a static GitHub Pages site. Press **Refresh All**, confirm **Run workflow** on GitHub Actions, and return/reload the dashboard after the workflow publishes its results.
 
-Store IDs are configured: Walgreens 10697, Dollar General 14405, Walmart 1731 (paused), and Target Victor 1156.
+- No Render or other external hosting service.
+- No scheduled polling or automatic browser refresh.
+- Scavio API key remains in GitHub Actions secrets and is never included in browser code.
+- Dashboard refresh workflow does not send Discord alerts.
 
-## Products
-- Delta Reign Booster Bundle
-- 30th Celebration Booster Bundle
-- Pitch Black Booster Bundle
+See [Dashboard setup and operation](README-DASHBOARD.md).
 
-Product identifiers are intentionally blank until exact variants are confirmed.
+## Watchlist
+- Delta Reign Booster Bundle — UPC 196214165823
+- 30th Celebration Booster Bundle — UPC 196214158849
+- Pitch Black Booster Bundle — UPC 196214157484
 
-## Walgreens assortment watchlist
+## Store configuration
+- Walgreens: 431 Hamilton St, Geneva, NY 14456 — discovery enabled; monitoring off.
+- Dollar General: 194 N Exchange St, Geneva, NY 14456 — discovery enabled; monitoring off.
+- Walmart: 990 NY-5 and 20, Geneva, NY 14456 — paused after discovery returned third-party marketplace sellers.
+- Target: 7500 Commons Blvd, Victor, NY 14564 — discovery only; no validated first-party store-level stock adapter.
+- Staples: 337 Hamilton St, Geneva, NY 14456 — disabled pending a verified inventory adapter.
 
-The separate `config/walgreens_assortments.json` list searches Walgreens WIC assortment codes independently of the three set-specific products:
-- 665814 — universal Pokémon pack assortment (packs, blisters, individual packs)
+## Walgreens assortment research
+`config/walgreens_assortments.json` contains four broad Walgreens assortment/catalog codes:
+- 665814 — universal Pokémon pack assortment
 - 941046 — mini-tin assortment
 - 300443630 — Pokémon TCG online assortment baseline
 - 300425671 — third-party packaged Pokémon Trading Cards Lightning Set
 
-These are assortment/catalog lookup codes, not verified set-specific product IDs. A match or positive assortment quantity must not be interpreted as proof that Delta Reign, 30th Celebration, or Pitch Black is in stock. Discovery prints matches for manual review; it does not configure Walgreens stock alerts from WIC codes.
+These are assortment/catalog codes, not proof that any specific set is in stock. Discovery results must not be converted into set-specific stock alerts without exact matching.
 
-## Setup
-1. In **Settings → Secrets and variables → Actions**, add repository secrets:
-   - `SCAVIO_API_KEY`
-   - `DISCORD_WEBHOOK_URL`
-2. Open **Actions → Discover Products → Run workflow**.
-3. Inspect the logs for exact sealed-product matches and retailer-specific identifiers. Store IDs are already configured.
-4. Confirm exact set, packaging, and variant, then fill the matching IDs in `config/products.json` for retailers with verified stock endpoints:
-   - Walgreens: `product_id`
-   - Dollar General: `upc`
-   - Walmart: paused; do not configure until first-party seller and stock monitoring are independently verified.
-   - Target: `tcin`
-   Leave unmatched IDs as `null`.
-5. Only after validating a retailer-specific stock response, set that store’s `monitor_enabled` to `true` in `config/stores.json`. Then manually run **Actions → Inventory Monitor → Run workflow** and inspect the logs before relying on alerts. Do not enable a recurring schedule until the manual run is confirmed.
+## Discovery
+Run **Actions → Discover Products → Run workflow** to research product matches. Review exact set, packaging, seller, and retailer identifiers before changing the monitoring configuration.
 
-## Monitoring status
+## Live inventory eligibility
+The dashboard refresh workflow currently supports:
+- Walgreens `walgreens/stock` using a verified retailer product ID.
+- Dollar General `dollargeneral/stores` using a product UPC and configured store ID.
 
-Retailer discovery and live inventory monitoring are controlled separately. Walmart is paused entirely after the latest discovery run returned only third-party sellers. Walgreens, Dollar General, and Target remain available for discovery, but live monitoring is disabled until exact product matches and reliable stock responses are verified. Set a retailer's `monitor_enabled` to `true` only after that verification.
+A check runs only when the retailer is enabled, `monitor_enabled` is true, a store ID exists, and the product has the matching retailer-specific identifier. Walmart and Target are deliberately excluded until their inventory integrations are verified. Unknown responses are never represented as out of stock.
 
-## Walmart seller verification
+At present, no product/store combination is eligible for live monitoring. Refresh All will report zero eligible checks without consuming Scavio credits on unverified product matches.
 
-Retail Radar only treats a Walmart listing as eligible for Walmart stock alerts when the product response explicitly identifies `seller_name` as `Walmart.com`. Marketplace listings, other sellers, and listings with missing/unverified seller identity are skipped. A listing being hosted on walmart.com, fulfilled by Walmart, or showing a Walmart URL is not by itself proof that Walmart is the seller.
-
-## Reliability
-- Alerts fire on the first positive stock observation and when a product changes from out of stock to in stock.
-- Unknown stock responses are logged as errors, not treated as out of stock.
-- Inventory can be delayed or inaccurate; confirm with the retailer before travelling.
-- Inventory monitoring is currently manual-only; the 15-minute schedule is paused until at least one retailer's product matching and stock endpoint are verified.
-- API routes and response fields still need to be validated against your current Scavio account/docs before relying on live alerts. Review credit usage before enabling scheduled polling.
-
-## Local use
-Python 3.11+:
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python -m app.discover_products
-python -m app.monitor
-```
-
-
-## Retail Radar Dashboard
-
-A click-to-refresh dashboard is included. It performs no background polling and keeps the Scavio API key on the server. See [Dashboard deployment instructions](README-DASHBOARD.md) and use the [one-click Render deployment](https://render.com/deploy?repo=https://github.com/zackeryrwhite/retail-radar).
-
-
-## Dashboard
-
-See [Retail Radar Dashboard setup](README-DASHBOARD.md). The dashboard is hosted with GitHub Pages and inventory refreshes run manually through GitHub Actions; no external hosting service is required.
+## Secrets
+The dashboard refresh workflow uses the existing `SCAVIO_API_KEY` repository secret. Do not put API keys or personal access tokens in `docs/` or any browser-side JavaScript.

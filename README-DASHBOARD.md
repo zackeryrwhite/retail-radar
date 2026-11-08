@@ -29,7 +29,7 @@ Only retailers with an implemented, validated inventory adapter, an enabled stor
 - Target: discovery only; no validated first-party store-level stock adapter.
 - Staples: unsupported.
 
-Consequently, the current watchlist has zero eligible live checks. Refresh All will publish that status without spending Scavio credits on unverified products or retailers.
+Consequently, the current watchlist has zero eligible live checks. Refresh All will publish that status without spending Scavio credits on unverified products or retailers. History starts accumulating only after eligible retailer/product combinations are enabled.
 
 ## Manual-only guarantees
 - No scheduled inventory polling.

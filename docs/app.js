@@ -59,5 +59,4 @@ $("loginForm").addEventListener("submit",async e=>{
   catch(err) { $("loginError").textContent=err.message; }
 });
 if (password) { $("password").value=password; loadDashboard().then(()=>$("login").classList.add("hidden")).catch(()=>{}); }
-if (!API) $("loginError").textContent="Deployment setup is required: set the API URL in docs/config.js.";
 })();

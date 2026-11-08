@@ -10,7 +10,6 @@ function authHeaders(json=false) {
   return headers;
 }
 async function api(path, options={}) {
-  if (!API) throw new Error("Dashboard API URL has not been configured yet.");
   const response = await fetch(API + path, {...options, headers: {...authHeaders(!!options.body), ...(options.headers || {})}});
   if (response.status === 401) { sessionStorage.removeItem("rr_password"); password=""; $("login").classList.remove("hidden"); throw new Error("Password not accepted. Please reconnect."); }
   const body = await response.json().catch(() => ({}));

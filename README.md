@@ -1,6 +1,6 @@
 # Retail Radar
 
-Pokémon TCG product discovery for selected retailers, with gated inventory checks and Discord alerts.
+Pokémon TCG product discovery and a manual-refresh GitHub Pages inventory dashboard.
 
 ## Integrations
 - Walgreens: store lookup, product search, and stock lookup.
@@ -78,3 +78,8 @@ python -m app.monitor
 ## Retail Radar Dashboard
 
 A click-to-refresh dashboard is included. It performs no background polling and keeps the Scavio API key on the server. See [Dashboard deployment instructions](README-DASHBOARD.md) and use the [one-click Render deployment](https://render.com/deploy?repo=https://github.com/zackeryrwhite/retail-radar).
+
+
+## Dashboard
+
+See [Retail Radar Dashboard setup](README-DASHBOARD.md). The dashboard is hosted with GitHub Pages and inventory refreshes run manually through GitHub Actions; no external hosting service is required.

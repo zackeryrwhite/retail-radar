@@ -1,5 +1,13 @@
 {
-  "runs": [],
+  "runs": [
+    {
+      "generated_at": "2026-11-08T01:18:30.138739+00:00",
+      "status": "no_eligible_checks",
+      "eligible_checks": 0,
+      "result_count": 0,
+      "error_count": 0
+    }
+  ],
   "observations": [],
   "retention": {
     "max_runs": 250,

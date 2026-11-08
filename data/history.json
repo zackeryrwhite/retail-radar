@@ -1,0 +1,8 @@
+{
+  "runs": [],
+  "observations": [],
+  "retention": {
+    "max_runs": 250,
+    "max_observations": 1000
+  }
+}
